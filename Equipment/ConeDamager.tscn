@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2v81n7ghf784"]
+
+[ext_resource type="Script" path="res://Equipment/ConeDamager.gd" id="1_g21y4"]
+
+[node name="ConeDamager" type="Node"]
+script = ExtResource("1_g21y4")
+
+[node name="DamageRateCooldown" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="timeout" from="DamageRateCooldown" to="." method="_on_damage_rate_cooldown_timeout"]

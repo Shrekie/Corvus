@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbo8esip3an1k"]
+
+[ext_resource type="Script" path="res://Tendencies/Lifeforce.gd" id="1_upl7e"]
+
+[node name="Lifeforce" type="Node"]
+script = ExtResource("1_upl7e")

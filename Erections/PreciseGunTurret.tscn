@@ -1,0 +1,109 @@
+[gd_scene load_steps=17 format=3 uid="uid://biwrrr7e06jyt"]
+
+[ext_resource type="Script" path="res://Erections/PreciseGunTurret.gd" id="1_hig50"]
+[ext_resource type="Texture2D" uid="uid://bp1c28r51thkm" path="res://Sprites/PreciseGunTurretSheet.png" id="2_dy2i7"]
+[ext_resource type="Texture2D" uid="uid://drrtrcfoqge5s" path="res://Sprites/PreciseGunTurretFiringSheet.png" id="3_0iv4l"]
+[ext_resource type="Texture2D" uid="uid://dt3bkgchqm5yh" path="res://Sprites/PreciseGunTurretPlaceInhabitedSheet.png" id="4_vji6x"]
+[ext_resource type="PackedScene" uid="uid://bsb1j3rwnlyvd" path="res://Equipment/NozzleConeArea.tscn" id="5_sl0w4"]
+[ext_resource type="PackedScene" uid="uid://d2v81n7ghf784" path="res://Equipment/ConeDamager.tscn" id="6_qsqt2"]
+[ext_resource type="PackedScene" uid="uid://d1c7y5a2ieu3q" path="res://Erections/TurretStructure.tscn" id="7_5eclb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ud2wt"]
+atlas = ExtResource("2_dy2i7")
+region = Rect2(7, 9, 128, 124)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_53nkb"]
+atlas = ExtResource("3_0iv4l")
+region = Rect2(7, 12, 128, 124)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tdxrg"]
+atlas = ExtResource("3_0iv4l")
+region = Rect2(148, 12, 128, 124)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ner0j"]
+atlas = ExtResource("3_0iv4l")
+region = Rect2(289, 12, 128, 124)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0qxj"]
+atlas = ExtResource("3_0iv4l")
+region = Rect2(430, 12, 128, 124)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fb5t7"]
+atlas = ExtResource("2_dy2i7")
+region = Rect2(148, 9, 128, 124)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apuw4"]
+atlas = ExtResource("4_vji6x")
+region = Rect2(148, 9, 128, 124)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tpsjd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ud2wt")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_53nkb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tdxrg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ner0j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0qxj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_53nkb")
+}],
+"loop": false,
+"name": &"fire",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fb5t7")
+}],
+"loop": false,
+"name": &"placing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apuw4")
+}],
+"loop": false,
+"name": &"placing_inhabited",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vmy7f"]
+radius = 38.0
+height = 104.0
+
+[node name="Precise Gun Turret" type="StaticBody2D"]
+script = ExtResource("1_hig50")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tpsjd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_vmy7f")
+
+[node name="NozzleConeArea" parent="." instance=ExtResource("5_sl0w4")]
+position = Vector2(0, -62)
+
+[node name="ConeDamager" parent="." node_paths=PackedStringArray("cone_area") instance=ExtResource("6_qsqt2")]
+cone_area = NodePath("../NozzleConeArea")
+
+[node name="TurretStructure" parent="." node_paths=PackedStringArray("turret_spender") instance=ExtResource("7_5eclb")]
+turret_spender = NodePath("../ConeDamager")
+
+[connection signal="damage_dealt" from="ConeDamager" to="." method="_on_cone_damager_damage_dealt"]

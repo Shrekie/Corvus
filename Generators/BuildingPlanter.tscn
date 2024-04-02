@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgxaelin8gkdk"]
+
+[ext_resource type="Script" path="res://Generators/BuildingPlanter.gd" id="1_s8qpo"]
+
+[node name="BuildingPlanter" type="Node"]
+script = ExtResource("1_s8qpo")

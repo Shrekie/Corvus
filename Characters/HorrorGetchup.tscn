@@ -1,0 +1,109 @@
+[gd_scene load_steps=17 format=3 uid="uid://tdjn4t0fk7my"]
+
+[ext_resource type="Script" path="res://Characters/HorrorGetchup.gd" id="1_3kyr6"]
+[ext_resource type="Texture2D" uid="uid://du4ku7dy1oyy2" path="res://Sprites/HorrorGetchup.png" id="1_ywsfs"]
+[ext_resource type="Texture2D" uid="uid://bcqlbf1e2i7yk" path="res://Sprites/GetchupDamagedSheet.png" id="2_gw7ee"]
+[ext_resource type="Texture2D" uid="uid://wdjp4yt5255h" path="res://Sprites/GetchupDyingSheet.png" id="4_yucmb"]
+[ext_resource type="PackedScene" uid="uid://dbo8esip3an1k" path="res://Tendencies/Lifeforce.tscn" id="5_cl2w1"]
+[ext_resource type="PackedScene" uid="uid://brwyw7boowml3" path="res://Tendencies/SoulHuntingAttraction.tscn" id="6_en4lk"]
+[ext_resource type="PackedScene" uid="uid://bsb1j3rwnlyvd" path="res://Equipment/NozzleConeArea.tscn" id="7_hvx4m"]
+[ext_resource type="PackedScene" uid="uid://d2v81n7ghf784" path="res://Equipment/ConeDamager.tscn" id="8_sfuxi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sr1ah"]
+atlas = ExtResource("2_gw7ee")
+region = Rect2(136, 15, 92, 149)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ffvb"]
+atlas = ExtResource("2_gw7ee")
+region = Rect2(378, 15, 92, 149)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_falso"]
+atlas = ExtResource("1_ywsfs")
+region = Rect2(15, 15, 92, 149)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bip0a"]
+atlas = ExtResource("4_yucmb")
+region = Rect2(136, 15, 92, 149)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0lsbm"]
+atlas = ExtResource("4_yucmb")
+region = Rect2(257, 15, 92, 149)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t5upv"]
+atlas = ExtResource("4_yucmb")
+region = Rect2(378, 15, 92, 149)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_14ip7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sr1ah")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ffvb")
+}],
+"loop": false,
+"name": &"damaged",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_falso")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bip0a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0lsbm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t5upv")
+}],
+"loop": false,
+"name": &"dying",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_38wnn"]
+radius = 16.0
+height = 128.0
+
+[node name="HorrorGetchup" type="AnimatableBody2D" groups=["horror_killable"]]
+collision_layer = 2
+collision_mask = 3
+sync_to_physics = false
+script = ExtResource("1_3kyr6")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_14ip7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
+shape = SubResource("CapsuleShape2D_38wnn")
+
+[node name="Lifeforce" parent="." node_paths=PackedStringArray("host") instance=ExtResource("5_cl2w1")]
+host = NodePath("..")
+
+[node name="SoulHuntingAttraction" parent="." node_paths=PackedStringArray("hunter") instance=ExtResource("6_en4lk")]
+hunter = NodePath("..")
+
+[node name="NozzleConeArea" parent="." instance=ExtResource("7_hvx4m")]
+rotation = 3.14159
+collision_layer = 2
+collision_mask = 3
+cone_width = 43.0
+cone_height = 96.5
+
+[node name="ConeDamager" parent="." node_paths=PackedStringArray("cone_area") instance=ExtResource("8_sfuxi")]
+cone_area = NodePath("../NozzleConeArea")
+damage_amount = 10
+group_to_damage = "soul_killable"
+
+[connection signal="host_damaged" from="Lifeforce" to="." method="_on_lifeforce_host_damaged"]
+[connection signal="host_death" from="Lifeforce" to="." method="_on_lifeforce_host_death"]

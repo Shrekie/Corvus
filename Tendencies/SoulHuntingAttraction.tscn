@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://brwyw7boowml3"]
+
+[ext_resource type="Script" path="res://Tendencies/SoulHuntingAttraction.gd" id="1_kdgmn"]
+
+[node name="SoulHuntingAttraction" type="Node"]
+script = ExtResource("1_kdgmn")
