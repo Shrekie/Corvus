@@ -23,7 +23,6 @@ func find_damage_target():
 			retarget_to_shortest_distance(existing_body)
 
 func on_body_entered_cone_area(entered_body):
-	print(entered_body)
 	if(entered_body.is_in_group(group_to_damage)):
 		if($DamageRateCooldown.is_stopped()):
 			$DamageRateCooldown.start()
