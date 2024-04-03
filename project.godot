@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Corvus"
-run/main_scene="res://TestScenarios/PlayerGrounds.tscn"
+run/main_scene="res://Scenarios/PlayerGrounds.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 

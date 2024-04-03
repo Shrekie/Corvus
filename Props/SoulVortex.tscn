@@ -46,6 +46,7 @@ sprite_frames = SubResource("SpriteFrames_a3vhs")
 shape = SubResource("CircleShape2D_mfkq3")
 
 [node name="Lifeforce" parent="." node_paths=PackedStringArray("host") instance=ExtResource("2_rmyci")]
+position = Vector2(0, -32)
 host = NodePath("..")
 
 [connection signal="host_damaged" from="Lifeforce" to="." method="_on_lifeforce_host_damaged"]

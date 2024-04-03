@@ -2,20 +2,26 @@ extends Node
 
 @export var host = Node.new()
 var health = 100
+@export var damagble = true
 
 signal host_damaged()
 signal host_death()
 	
 func damage_host(health_damage):
-	if (health > 0):
-		health -= health_damage
-		if (health <= 0):
-			host_death.emit()
-			host_damaged.emit()
+	if (damagble):
+		if (health > 0):
+			health -= health_damage
+			if (health <= 0):
+				host_death.emit()
+				host_damaged.emit()
+			else:
+				host_damaged.emit()
 		else:
 			host_damaged.emit()
-	else:
-		host_damaged.emit()
+			
+func _on_host_damaged():
+	$HealthBar.polygon[2].x = health
+	$HealthBar.polygon[3].x = health
 
 ## Blinks canvas item as if taking damage
 func modulate_damage_color(modulating: CanvasItem, \

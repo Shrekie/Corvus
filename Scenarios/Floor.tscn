@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3bsxut8bu0b3"]
+
+[ext_resource type="Texture2D" uid="uid://ddtl8y842dedi" path="res://Sprites/FloorPattern.png" id="1_5wvli"]
+[ext_resource type="Script" path="res://Scenarios/Floor.gd" id="2_n2230"]
+
+[node name="Floor" type="Sprite2D"]
+texture_repeat = 2
+texture = ExtResource("1_5wvli")
+region_enabled = true
+region_rect = Rect2(0, 0, 5760, 3240)
+script = ExtResource("2_n2230")

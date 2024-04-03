@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://c6i1y7bqrkbwx"]
+[gd_scene load_steps=13 format=3 uid="uid://c6i1y7bqrkbwx"]
 
 [ext_resource type="Script" path="res://Characters/PlayableCharacter.gd" id="1_mpdhb"]
 [ext_resource type="Texture2D" uid="uid://dtaiao5xchr33" path="res://Sprites/PlayableCharacter.png" id="2_v0wk8"]
 [ext_resource type="PackedScene" uid="uid://dgxaelin8gkdk" path="res://Generators/BuildingPlanter.tscn" id="3_4t75x"]
 [ext_resource type="Texture2D" uid="uid://cuf2iyw0avcfr" path="res://Sprites/PlayableCharacterMovingSheet.png" id="3_vsvva"]
+[ext_resource type="PackedScene" uid="uid://dbo8esip3an1k" path="res://Tendencies/Lifeforce.tscn" id="5_w1w5y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dwesx"]
 atlas = ExtResource("2_v0wk8")
@@ -62,7 +63,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_e8foa"]
 radius = 57.0088
 
-[node name="PlayableCharacter" type="CharacterBody2D"]
+[node name="PlayableCharacter" type="CharacterBody2D" groups=["defender_killable"]]
+motion_mode = 1
+safe_margin = 18.181
 script = ExtResource("1_mpdhb")
 metadata/_edit_group_ = true
 
@@ -74,11 +77,15 @@ sprite_frames = SubResource("SpriteFrames_5jtlq")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_e8foa")
 
 [node name="BuildingPlanter" parent="." node_paths=PackedStringArray("placer_node") instance=ExtResource("3_4t75x")]
 placer_node = NodePath("..")
+
+[node name="Lifeforce" parent="." node_paths=PackedStringArray("host") instance=ExtResource("5_w1w5y")]
+z_index = 1
+position = Vector2(0, 5)
+host = NodePath("..")
 
 [connection signal="placement_ended" from="BuildingPlanter" to="." method="_on_building_planter_placement_ended"]
 [connection signal="placement_started" from="BuildingPlanter" to="." method="_on_building_planter_placement_started"]

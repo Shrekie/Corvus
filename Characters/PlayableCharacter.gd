@@ -8,6 +8,10 @@ var input = Vector2.ZERO
 
 var locked_rotation = false
 
+@export var floor_boundary : Sprite2D
+
+
+
 func _physics_process(delta):
 	movement_actions(delta)
 	
@@ -39,6 +43,7 @@ func movement_actions(delta):
 		rotation = velocity.angle() + PI / 2
 		
 	move_and_slide()
+	position = floor_boundary.limit_to_square(position)
 
 func _on_building_planter_placement_started():
 	# Turn and freeze to mouse position 

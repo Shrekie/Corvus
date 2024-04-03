@@ -2,5 +2,19 @@
 
 [ext_resource type="Script" path="res://Tendencies/Lifeforce.gd" id="1_upl7e"]
 
-[node name="Lifeforce" type="Node"]
+[node name="Lifeforce" type="Node2D"]
 script = ExtResource("1_upl7e")
+
+[node name="HealthBackground" type="Polygon2D" parent="."]
+position = Vector2(-15, 0)
+scale = Vector2(0.3, 0.3)
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(0, -16, 0, 0, 100, 0, 100, -16)
+
+[node name="HealthBar" type="Polygon2D" parent="."]
+position = Vector2(-15, 0)
+scale = Vector2(0.3, 0.3)
+color = Color(0, 1, 0, 1)
+polygon = PackedVector2Array(0, -16, 0, 0, 100, 0, 100, -16)
+
+[connection signal="host_damaged" from="." to="." method="_on_host_damaged"]

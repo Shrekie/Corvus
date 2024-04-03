@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://ck7h1yqg0tbb3"]
+
+[ext_resource type="PackedScene" uid="uid://c3bsxut8bu0b3" path="res://Scenarios/Floor.tscn" id="1_5owce"]
+[ext_resource type="PackedScene" uid="uid://c6i1y7bqrkbwx" path="res://Characters/PlayableCharacter.tscn" id="2_g3a6m"]
+[ext_resource type="PackedScene" uid="uid://3l6df34nlry" path="res://Generators/HorrorSpawner.tscn" id="3_kn5h0"]
+[ext_resource type="PackedScene" uid="uid://e3kfjk2kylf2" path="res://Props/SoulVortex.tscn" id="4_e36lg"]
+[ext_resource type="Script" path="res://Accomplishers/ShopGains.gd" id="5_h2x7u"]
+
+[node name="PlayerGrounds" type="Node"]
+
+[node name="Floor" parent="." instance=ExtResource("1_5owce")]
+
+[node name="PlayableCharacter" parent="." node_paths=PackedStringArray("floor_boundary") instance=ExtResource("2_g3a6m")]
+floor_boundary = NodePath("../Floor")
+
+[node name="HorrorSpawner" parent="." node_paths=PackedStringArray("soul_to_hunt", "despawn_notifier", "floor_boundary") instance=ExtResource("3_kn5h0")]
+position = Vector2(0, -320)
+soul_to_hunt = NodePath("../SoulVortex")
+despawn_notifier = NodePath("../ShopGains")
+floor_boundary = NodePath("../Floor")
+
+[node name="SoulVortex" parent="." node_paths=PackedStringArray("floor_boundary") instance=ExtResource("4_e36lg")]
+position = Vector2(0, 352)
+floor_boundary = NodePath("../Floor")
+
+[node name="ShopGains" type="Node" parent="."]
+script = ExtResource("5_h2x7u")

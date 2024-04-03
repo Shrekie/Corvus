@@ -88,7 +88,9 @@ animations = [{
 radius = 38.0
 height = 104.0
 
-[node name="Precise Gun Turret" type="StaticBody2D" groups=["defender_killable"]]
+[node name="PreciseGunTurret" type="StaticBody2D" groups=["defender_killable"]]
+collision_layer = 8
+collision_mask = 11
 script = ExtResource("1_hig50")
 metadata/_edit_group_ = true
 
@@ -109,7 +111,9 @@ damage_amount = 20
 turret_spender = NodePath("../ConeDamager")
 
 [node name="Lifeforce" parent="." node_paths=PackedStringArray("host") instance=ExtResource("8_l8p88")]
+position = Vector2(0, 16)
 host = NodePath("..")
+damagble = false
 
 [connection signal="damage_dealt" from="ConeDamager" to="." method="_on_cone_damager_damage_dealt"]
 [connection signal="host_damaged" from="Lifeforce" to="." method="_on_lifeforce_host_damaged"]
