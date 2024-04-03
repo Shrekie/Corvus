@@ -137,7 +137,7 @@ cone_height = 96.5
 [node name="ConeDamager" parent="." node_paths=PackedStringArray("cone_area") instance=ExtResource("8_sfuxi")]
 cone_area = NodePath("../NozzleConeArea")
 damage_amount = 10
-group_to_damage = "soul_killable"
+group_to_damage = "defender_killable"
 
 [connection signal="host_damaged" from="Lifeforce" to="." method="_on_lifeforce_host_damaged"]
 [connection signal="host_death" from="Lifeforce" to="." method="_on_lifeforce_host_death"]

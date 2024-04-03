@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://biwrrr7e06jyt"]
+[gd_scene load_steps=18 format=3 uid="uid://biwrrr7e06jyt"]
 
 [ext_resource type="Script" path="res://Erections/PreciseGunTurret.gd" id="1_hig50"]
 [ext_resource type="Texture2D" uid="uid://bp1c28r51thkm" path="res://Sprites/PreciseGunTurretSheet.png" id="2_dy2i7"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bsb1j3rwnlyvd" path="res://Equipment/NozzleConeArea.tscn" id="5_sl0w4"]
 [ext_resource type="PackedScene" uid="uid://d2v81n7ghf784" path="res://Equipment/ConeDamager.tscn" id="6_qsqt2"]
 [ext_resource type="PackedScene" uid="uid://d1c7y5a2ieu3q" path="res://Erections/TurretStructure.tscn" id="7_5eclb"]
+[ext_resource type="PackedScene" uid="uid://dbo8esip3an1k" path="res://Tendencies/Lifeforce.tscn" id="8_l8p88"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ud2wt"]
 atlas = ExtResource("2_dy2i7")
@@ -87,7 +88,7 @@ animations = [{
 radius = 38.0
 height = 104.0
 
-[node name="Precise Gun Turret" type="StaticBody2D"]
+[node name="Precise Gun Turret" type="StaticBody2D" groups=["defender_killable"]]
 script = ExtResource("1_hig50")
 metadata/_edit_group_ = true
 
@@ -102,8 +103,14 @@ position = Vector2(0, -62)
 
 [node name="ConeDamager" parent="." node_paths=PackedStringArray("cone_area") instance=ExtResource("6_qsqt2")]
 cone_area = NodePath("../NozzleConeArea")
+damage_amount = 20
 
 [node name="TurretStructure" parent="." node_paths=PackedStringArray("turret_spender") instance=ExtResource("7_5eclb")]
 turret_spender = NodePath("../ConeDamager")
 
+[node name="Lifeforce" parent="." node_paths=PackedStringArray("host") instance=ExtResource("8_l8p88")]
+host = NodePath("..")
+
 [connection signal="damage_dealt" from="ConeDamager" to="." method="_on_cone_damager_damage_dealt"]
+[connection signal="host_damaged" from="Lifeforce" to="." method="_on_lifeforce_host_damaged"]
+[connection signal="host_death" from="Lifeforce" to="." method="_on_lifeforce_host_death"]

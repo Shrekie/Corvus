@@ -17,7 +17,9 @@ func damage_host(health_damage):
 	else:
 		host_damaged.emit()
 
-func modulate_damage_color(modulating: CanvasItem, default_modulate: Color):
+## Blinks canvas item as if taking damage
+func modulate_damage_color(modulating: CanvasItem, \
+default_modulate = Color(1, 1, 1)):
 	if(modulating != null):
 		modulating.self_modulate = Color(0.906, 0.812, 0.812)
 	await get_tree().create_timer(0.3).timeout

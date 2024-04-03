@@ -1,14 +1,11 @@
 extends AnimatableBody2D
 
-var default_modulate: Color
-
 func _ready():
 	$ConeDamager.enable_cone_detection()
-	default_modulate = $AnimatedSprite2D.get_self_modulate()
 	$AnimatedSprite2D.play("moving")
 
 func _on_lifeforce_host_damaged():
-	$Lifeforce.modulate_damage_color($AnimatedSprite2D, default_modulate)
+	$Lifeforce.modulate_damage_color($AnimatedSprite2D)
 
 func _on_lifeforce_host_death():
 	$ConeDamager.disable_cone_detection()
