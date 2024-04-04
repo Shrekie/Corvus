@@ -10,8 +10,6 @@ var locked_rotation = false
 
 @export var floor_boundary : Sprite2D
 
-
-
 func _physics_process(delta):
 	movement_actions(delta)
 	

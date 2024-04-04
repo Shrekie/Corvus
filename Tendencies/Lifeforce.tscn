@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Tendencies/Lifeforce.gd" id="1_upl7e"]
 
 [node name="Lifeforce" type="Node2D"]
+z_index = 2
 script = ExtResource("1_upl7e")
 
 [node name="HealthBackground" type="Polygon2D" parent="."]

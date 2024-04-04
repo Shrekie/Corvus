@@ -95,26 +95,29 @@ script = ExtResource("1_hig50")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_tpsjd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_vmy7f")
 
-[node name="NozzleConeArea" parent="." instance=ExtResource("5_sl0w4")]
-position = Vector2(0, -62)
+[node name="Lifeforce" parent="." node_paths=PackedStringArray("host") instance=ExtResource("8_l8p88")]
+z_index = 2
+position = Vector2(0, 16)
+host = NodePath("..")
+damagble = false
+
+[node name="TurretStructure" parent="." node_paths=PackedStringArray("turret_spender") instance=ExtResource("7_5eclb")]
+turret_spender = NodePath("../ConeDamager")
 
 [node name="ConeDamager" parent="." node_paths=PackedStringArray("cone_area") instance=ExtResource("6_qsqt2")]
 cone_area = NodePath("../NozzleConeArea")
 damage_amount = 20
 
-[node name="TurretStructure" parent="." node_paths=PackedStringArray("turret_spender") instance=ExtResource("7_5eclb")]
-turret_spender = NodePath("../ConeDamager")
+[node name="NozzleConeArea" parent="." instance=ExtResource("5_sl0w4")]
+position = Vector2(0, -62)
+invisible_cone = null
 
-[node name="Lifeforce" parent="." node_paths=PackedStringArray("host") instance=ExtResource("8_l8p88")]
-position = Vector2(0, 16)
-host = NodePath("..")
-damagble = false
-
-[connection signal="damage_dealt" from="ConeDamager" to="." method="_on_cone_damager_damage_dealt"]
 [connection signal="host_damaged" from="Lifeforce" to="." method="_on_lifeforce_host_damaged"]
 [connection signal="host_death" from="Lifeforce" to="." method="_on_lifeforce_host_death"]
+[connection signal="damage_dealt" from="ConeDamager" to="." method="_on_cone_damager_damage_dealt"]

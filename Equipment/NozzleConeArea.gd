@@ -12,9 +12,11 @@ extends Area2D
 		$CollisionPolygon2D.polygon[0].y = -new_cone_height
 		$CollisionPolygon2D.polygon[3].y = -new_cone_height
 		cone_height = new_cone_height
+
+@export var invisible_cone = false
 		
 func _ready():
-	if not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() and not invisible_cone:
 		add_nozzle_cone_highlight()
 		
 func add_nozzle_cone_highlight():

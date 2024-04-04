@@ -64,6 +64,7 @@ animations = [{
 radius = 57.0088
 
 [node name="PlayableCharacter" type="CharacterBody2D" groups=["defender_killable"]]
+z_index = 1
 motion_mode = 1
 safe_margin = 18.181
 script = ExtResource("1_mpdhb")
@@ -79,13 +80,13 @@ sprite_frames = SubResource("SpriteFrames_5jtlq")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_e8foa")
 
-[node name="BuildingPlanter" parent="." node_paths=PackedStringArray("placer_node") instance=ExtResource("3_4t75x")]
-placer_node = NodePath("..")
-
 [node name="Lifeforce" parent="." node_paths=PackedStringArray("host") instance=ExtResource("5_w1w5y")]
 z_index = 1
 position = Vector2(0, 5)
 host = NodePath("..")
+
+[node name="BuildingPlanter" parent="." node_paths=PackedStringArray("placer_node") instance=ExtResource("3_4t75x")]
+placer_node = NodePath("..")
 
 [connection signal="placement_ended" from="BuildingPlanter" to="." method="_on_building_planter_placement_ended"]
 [connection signal="placement_started" from="BuildingPlanter" to="." method="_on_building_planter_placement_started"]
