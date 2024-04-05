@@ -16,7 +16,11 @@ func _on_spawn_timer_timeout():
 	randf_range(floor_boundary.get_rect().position.x,\
 	floor_boundary.get_rect().end.x)
 	
-	horror_spawn.get_node("SoulHuntingAttraction").soul_to_hunt = soul_to_hunt
-	horror_spawn.get_node("Lifeforce").host_death.connect(despawn_notifier._on_horror_died)
+	horror_spawn.get_node("SoulHuntingAttraction").soul_to_hunt = \
+	soul_to_hunt
+	
+	horror_spawn.get_node("Lifeforce") \
+	.host_death.connect(despawn_notifier.get_node("ShopGains") \
+	._on_horror_died)
 	
 	add_sibling(horror_spawn)

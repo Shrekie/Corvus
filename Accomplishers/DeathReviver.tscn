@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cx6q5sakbr4pa"]
+
+[ext_resource type="Script" path="res://Accomplishers/DeathReviver.gd" id="1_dxga5"]
+
+[node name="DeathReviver" type="Node2D"]
+script = ExtResource("1_dxga5")

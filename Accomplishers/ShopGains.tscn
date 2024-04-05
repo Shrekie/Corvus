@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bf7qgk7s84uxe"]
+
+[ext_resource type="Script" path="res://Accomplishers/ShopGains.gd" id="1_sv7gi"]
+
+[node name="ShopGains" type="Node2D"]
+script = ExtResource("1_sv7gi")

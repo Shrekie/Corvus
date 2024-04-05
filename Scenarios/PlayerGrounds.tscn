@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://ck7h1yqg0tbb3"]
+[gd_scene load_steps=7 format=3 uid="uid://ck7h1yqg0tbb3"]
 
 [ext_resource type="PackedScene" uid="uid://c3bsxut8bu0b3" path="res://Scenarios/Floor.tscn" id="1_5owce"]
 [ext_resource type="PackedScene" uid="uid://c6i1y7bqrkbwx" path="res://Characters/PlayableCharacter.tscn" id="2_g3a6m"]
 [ext_resource type="PackedScene" uid="uid://3l6df34nlry" path="res://Generators/HorrorSpawner.tscn" id="3_kn5h0"]
 [ext_resource type="PackedScene" uid="uid://e3kfjk2kylf2" path="res://Props/SoulVortex.tscn" id="4_e36lg"]
-[ext_resource type="Script" path="res://Accomplishers/ShopGains.gd" id="5_h2x7u"]
+[ext_resource type="Texture2D" uid="uid://cnlorgd0yd04g" path="res://Sprites/Motivation.png" id="4_smc06"]
+[ext_resource type="PackedScene" uid="uid://cx6q5sakbr4pa" path="res://Accomplishers/DeathReviver.tscn" id="5_wewy7"]
 
 [node name="PlayerGrounds" type="Node"]
 
@@ -13,15 +14,45 @@
 [node name="PlayableCharacter" parent="." node_paths=PackedStringArray("floor_boundary") instance=ExtResource("2_g3a6m")]
 floor_boundary = NodePath("../Floor")
 
+[node name="DeathReviver" parent="PlayableCharacter" node_paths=PackedStringArray("player_life", "soul_life", "scenario_to_reload") instance=ExtResource("5_wewy7")]
+process_mode = 3
+z_index = 3
+player_life = NodePath("..")
+soul_life = NodePath("../../SoulVortex")
+scenario_to_reload = NodePath("../..")
+
+[node name="PanelContainer" type="PanelContainer" parent="PlayableCharacter/DeathReviver"]
+offset_left = -192.0
+offset_top = -128.0
+offset_right = 192.0
+offset_bottom = 128.0
+pivot_offset = Vector2(192, 128)
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayableCharacter/DeathReviver/PanelContainer"]
+position = Vector2(191.75, 128)
+scale = Vector2(0.997409, 1)
+texture = ExtResource("4_smc06")
+
+[node name="Button" type="Button" parent="PlayableCharacter/DeathReviver/PanelContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 14
+theme_override_font_sizes/font_size = 30
+text = "TRY AGAIN"
+
 [node name="HorrorSpawner" parent="." node_paths=PackedStringArray("soul_to_hunt", "despawn_notifier", "floor_boundary") instance=ExtResource("3_kn5h0")]
 position = Vector2(0, -320)
 soul_to_hunt = NodePath("../SoulVortex")
-despawn_notifier = NodePath("../ShopGains")
+despawn_notifier = NodePath("../PlayableCharacter")
 floor_boundary = NodePath("../Floor")
 
 [node name="SoulVortex" parent="." node_paths=PackedStringArray("floor_boundary") instance=ExtResource("4_e36lg")]
 position = Vector2(0, 352)
 floor_boundary = NodePath("../Floor")
 
-[node name="ShopGains" type="Node" parent="."]
-script = ExtResource("5_h2x7u")
+[connection signal="button_up" from="PlayableCharacter/DeathReviver/PanelContainer/Button" to="PlayableCharacter/DeathReviver" method="_on_button_button_up"]

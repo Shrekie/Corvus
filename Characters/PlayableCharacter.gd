@@ -14,7 +14,6 @@ func _physics_process(delta):
 	movement_actions(delta)
 	
 func movement_actions(delta):
-	
 	input.x = int(Input.is_action_pressed("move_right"))
 	input.x = input.x - int(Input.is_action_pressed("move_left"))
 	input.y = int(Input.is_action_pressed("move_down"))
@@ -52,3 +51,6 @@ func _on_building_planter_placement_started():
 
 func _on_building_planter_placement_ended():
 	locked_rotation = false
+	
+func _on_lifeforce_host_damaged():
+	$Lifeforce.modulate_damage_color($AnimatedSprite2D)

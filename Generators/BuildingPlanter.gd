@@ -3,24 +3,23 @@ extends Node
 ## Character constructing the building
 @export var placer_node = CharacterBody2D.new()
 
-# All buildings
-var PreciseGunTurret_scene = preload("res://Erections/PreciseGunTurret.tscn")
+## Menu controlling selectable buildings
+@export var building_menu : Node
 
 # Currently selected building
-var selected_building_scene = PackedScene
+var selected_building_scene : PackedScene
 var selected_building_placement = Node2D.new()
 
 signal placement_started()
+signal placement_completed()
+signal placement_canceled()
 signal placement_ended()
 
 var is_placing = false
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	#TODO: Building menu
-	selected_building_scene = PreciseGunTurret_scene
+	selected_building_scene = building_menu.selected_good.item
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	placing_building()
 	
@@ -30,7 +29,11 @@ func placing_building():
 		rotate_placement_to_mouse()
 		display_inhabited_placement()
 		
-	if (Input.is_action_just_pressed("build") and not is_placing):
+	if (Input.is_action_just_pressed("build") and not is_placing \
+	and building_menu.is_insufficient()):
+		building_menu.decline_placement()
+		
+	elif (Input.is_action_just_pressed("build") and not is_placing):
 		place_building()
 
 	elif (Input.is_action_just_pressed("build") and is_placing \
@@ -61,6 +64,7 @@ func erect_building():
 	placer_node.add_sibling(selected_building_placement)
 	
 	is_placing = false
+	placement_completed.emit()
 	placement_ended.emit()
 
 func place_building():
@@ -85,6 +89,7 @@ func cancel_building():
 	placer_node.remove_child(selected_building_placement)
 		
 	is_placing = false
+	placement_canceled.emit()
 	placement_ended.emit()
 
 func rotate_placement_to_mouse():
