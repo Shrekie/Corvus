@@ -1,2 +1,4 @@
 /.godot
 *.tmp
+export_presets.cfg
+Icon.png.import

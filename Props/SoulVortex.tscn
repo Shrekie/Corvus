@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://e3kfjk2kylf2"]
+[gd_scene load_steps=8 format=3 uid="uid://e3kfjk2kylf2"]
 
 [ext_resource type="Script" path="res://Props/SoulVortex.gd" id="1_ryijm"]
 [ext_resource type="Texture2D" uid="uid://cnkadx7it6au4" path="res://Sprites/SoulVortex.png" id="1_xqcob"]
 [ext_resource type="Texture2D" uid="uid://cu7wdviihpaig" path="res://Sprites/SoulVortexDamaged.png" id="2_mxfp4"]
 [ext_resource type="PackedScene" uid="uid://dbo8esip3an1k" path="res://Tendencies/Lifeforce.tscn" id="2_rmyci"]
+[ext_resource type="PackedScene" uid="uid://c8ihd04gryjp8" path="res://Tendencies/HealthRegeneration.tscn" id="5_scvke"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_a3vhs"]
 animations = [{
@@ -49,6 +50,9 @@ shape = SubResource("CircleShape2D_r2064")
 [node name="Lifeforce" parent="." node_paths=PackedStringArray("host") instance=ExtResource("2_rmyci")]
 position = Vector2(0, -32)
 host = NodePath("..")
+
+[node name="HealthRegeneration" parent="." node_paths=PackedStringArray("modulator") instance=ExtResource("5_scvke")]
+modulator = NodePath("../AnimatedSprite2D")
 
 [connection signal="host_damaged" from="Lifeforce" to="." method="_on_lifeforce_host_damaged"]
 [connection signal="host_death" from="Lifeforce" to="." method="_on_lifeforce_host_death"]

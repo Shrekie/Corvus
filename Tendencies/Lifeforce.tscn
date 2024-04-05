@@ -17,5 +17,3 @@ position = Vector2(-15, 0)
 scale = Vector2(0.3, 0.3)
 color = Color(0.898039, 0.835294, 0.470588, 1)
 polygon = PackedVector2Array(0, -16, 0, 0, 100, 0, 100, -16)
-
-[connection signal="host_damaged" from="." to="." method="_on_host_damaged"]

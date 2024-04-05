@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c6i1y7bqrkbwx"]
+[gd_scene load_steps=16 format=3 uid="uid://c6i1y7bqrkbwx"]
 
 [ext_resource type="Script" path="res://Characters/PlayableCharacter.gd" id="1_mpdhb"]
 [ext_resource type="Texture2D" uid="uid://dtaiao5xchr33" path="res://Sprites/PlayableCharacter.png" id="2_v0wk8"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dbo8esip3an1k" path="res://Tendencies/Lifeforce.tscn" id="5_w1w5y"]
 [ext_resource type="PackedScene" uid="uid://bf7qgk7s84uxe" path="res://Accomplishers/ShopGains.tscn" id="6_0merd"]
 [ext_resource type="PackedScene" uid="uid://5ytlovj5f4j0" path="res://Accomplishers/PointLabel.tscn" id="7_ogwq7"]
+[ext_resource type="PackedScene" uid="uid://c8ihd04gryjp8" path="res://Tendencies/HealthRegeneration.tscn" id="8_bnhpj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dwesx"]
 atlas = ExtResource("2_v0wk8")
@@ -83,8 +84,9 @@ shape = SubResource("CircleShape2D_e8foa")
 
 [node name="Lifeforce" parent="." node_paths=PackedStringArray("host") instance=ExtResource("5_w1w5y")]
 z_index = 1
-position = Vector2(52, -2)
-scale = Vector2(0.8, 3)
+position = Vector2(59, -12)
+rotation = -1.5708
+scale = Vector2(1.3, 3)
 host = NodePath("..")
 
 [node name="ShopGains" parent="." node_paths=PackedStringArray("point_node") instance=ExtResource("6_0merd")]
@@ -108,11 +110,19 @@ theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 22
 counter_rotator = NodePath("../..")
 
+[node name="PointWelfareTimer" type="Timer" parent="ShopGains"]
+wait_time = 10.0
+autostart = true
+
 [node name="BuildingPlanter" parent="." node_paths=PackedStringArray("placer_node", "building_menu") instance=ExtResource("3_4t75x")]
 placer_node = NodePath("..")
 building_menu = NodePath("../ShopGains")
 
+[node name="HealthRegeneration" parent="." node_paths=PackedStringArray("modulator") instance=ExtResource("8_bnhpj")]
+modulator = NodePath("../AnimatedSprite2D")
+
 [connection signal="host_damaged" from="Lifeforce" to="." method="_on_lifeforce_host_damaged"]
+[connection signal="timeout" from="ShopGains/PointWelfareTimer" to="ShopGains" method="_on_point_welfare_timer_timeout"]
 [connection signal="placement_completed" from="BuildingPlanter" to="ShopGains" method="_on_building_planter_placement_completed"]
 [connection signal="placement_ended" from="BuildingPlanter" to="." method="_on_building_planter_placement_ended"]
 [connection signal="placement_started" from="BuildingPlanter" to="." method="_on_building_planter_placement_started"]
